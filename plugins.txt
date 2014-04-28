@@ -1,0 +1,30 @@
+Phoenix Plugin Development Docs
+
+Getting Started
+
+Phoenix plugin development is easy.
+
+Step 1 - File Structure & Naming Convention
+
+	To create a plugin for phoenix users, it is important to understand how Phoenix runs plugins. 
+	
+	Phoenix first scans the "plugins" directory. It then treats any child directory as the plugin "package."
+	
+	It then looks for a file called "main.php" in that directory. In this file should be a class with the same name as your plugin package. For example, if your plugin's directory is named test_plugin or test-plugin, your class should be called TestPlugin.
+	
+	As of now, your class constructor is the only method that will be executed automatically. However, some class properties may be used by the Phoenix Plugin Loader. Pre-defined auto-loading methods may be added in the future of Phoenix. Methods like these may act as "hooks" and will be executed at specific events.
+	
+Step 2 - Registering Hooks & More
+
+	Phoenix offers a large array of hooks and events to trigger your methods and integrate deeply into a user's installation. Some of these hooks include addNavBarItem, which can add items to the built in Phoenix navigation bar.
+	
+	Also included in the Phoenix API are tools for User and Session handling. The API provides methods like registerSecureSession()  or authorizeUser().
+	
+	Hooks example: Adding a page with a URL to the installation
+	
+	To register a page with Phoenix, simply call the hook() method.
+	
+	Plugin::hook("hook name", array("page name","plugin name", BOOL - is secure page?/requires user authentication?, BOOL - requires at least a user role of...));
+	Plugin::hook("add-page", array("page-name","plugin-name", true, 0));
+
+	

@@ -1,0 +1,73 @@
+Welcome to Phoenix.
+
+Version 0.1
+
+- Added Console for debugging
+
+	Console::tell( String $msg )
+	
+		$msg - Line of text to be printed
+		
+		- Prints line of text as a message to the debug GUI, message is wrapped in <p> tags.
+	
+	
+- Added commandline-like interface
+	- added func command ( func <class> <method/function> <argument> )
+	
+		class - optional (pass ~ to ignore this argument)
+			Parent class of method to be executed.
+			
+		method/function 
+			function or method to be executed. If a method, must be a child of specified class.
+			
+		argument - optional (pass ~ to ignore this argument) 
+			single argument to pass to executed function or method.
+		
+	
+	known issues:
+	-only supports one argument. Support for multiple arguments will be added in a future release.
+
+- Added Dynamic session API
+	- Instantiated as the Secure class
+	- Prevents other plugins from altering your sessions.
+	- Allows for quick altering of a single session by an instance.
+	
+	Secure::__construct( String $sessionid )
+		- creates or renews a session
+		
+	Secure::isValid( BOOL $resetTimeoutOnSuccess )
+	
+		BOOL $resetTimeoutOnSuccess - (optional)
+			- pass TRUE to execute Secure::resetSessionTimeout() 
+		
+		- Checks the following criteria of the $_SESSION of the instance.
+			- Secure::sessionTimedOut()
+			-
+			
+		Return Values
+			-returns TRUE if criteria is met, FALSE on failure.
+	
+	Secure::registerSession( int $id, $data, $expire = false )
+		- Sets $_SESSION[] with specific Developer ID, data array, and expiration. 
+		
+		Return Values
+			-returns TRUE on success, FALSE on failure.
+		
+	Secure::destroyRegisteredSession()
+		- Securely nulls out and destroys $_SESSION associated with the instance
+		
+		Return Values
+			-returns TRUE on success, FALSE on failure.
+	
+	Secure::sessionTimedOut()
+		- Checks if session time is earlier than current time.
+		
+		Return Values
+			-returns TRUE if session has timed out, FALSE if session is still valid
+			
+	Secure::resetSessionTimeout()	
+		- Resets expiration data in $_SESSION of the instance to current time()
+		
+		Return Values
+			-returns TRUE on success, FALSE on failure.
+	
