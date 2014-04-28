@@ -1,0 +1,109 @@
+<xml>
+	
+	<command>
+		
+		<keyword>get_user_pass</keyword>
+		
+		<param>
+			
+			<keyword>uid</keyword>
+			<type>str</type>
+			<maxlen>20</maxlen>
+			<minlen>1</minlen>
+			<required>no</required>
+			
+		</param>
+		
+		<return>
+			
+			<type>str</type>
+			
+		</return>
+		
+		<exec>
+			
+			<func>
+				
+				<static>no</static>
+				<class>User</class>
+				<name>get_user_pass</name>
+				
+			</func>
+			
+		</exec>
+		
+	</command>
+	
+	<!--**********COMMAND*********-->
+	
+	<command>
+		
+		<keyword>login</keyword>
+		
+		<param>
+			
+			<keyword>uid</keyword>
+			<type>str</type>
+			<maxlen>20</maxlen>
+			<minlen>1</minlen>
+			<required>yes</required>
+			
+		</param>
+		
+		<return>
+			
+			<type>str</type>
+			
+		</return>
+		
+		<exec>
+			
+			<func>
+				
+				<static>no</static>
+				<class>User</class>
+				<name>get_user_pass</name>
+				
+			</func>
+			
+		</exec>
+		
+	</command>
+	
+	<command>
+		
+		<keyword>get_user_pass</keyword>
+		
+		<param>
+			
+			<keyword>uid</keyword>
+			<type>str</type>
+			<maxlen>20</maxlen>
+			<minlen>1</minlen>
+			<required>no</required>
+			
+		</param>
+		
+		<return>
+			
+			<type>str</type>
+			
+		</return>
+		
+		<exec>
+			
+			<func>
+				
+				<static>no</static>
+				<class>User</class>
+				<name>get_user_pass</name>
+				
+			</func>
+			
+		</exec>
+		
+	</command>
+	
+	
+	
+</xml>

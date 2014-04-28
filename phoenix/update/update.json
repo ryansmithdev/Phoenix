@@ -1,0 +1,19 @@
+{
+    "files": [
+        {
+            "path": "/includes/class-Navbar.php",
+            "replace": "YES",
+            "remove" : "NO"
+        },
+        {
+            "path": "/includes/class-Permissions.php",
+            "replace": "NO",
+            "remove" : "NO"
+        },
+        {
+            "path": "/includes/class-NewClass.php",
+            "replace": "NO",
+            "remove" : "YES"
+        }
+    ]
+}

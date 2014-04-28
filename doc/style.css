@@ -1,0 +1,79 @@
+body {
+	
+	margin: 0;padding: 0;
+	font-family: "PT Sans";
+	
+}
+a:link {
+	
+	color: #333;
+	
+}
+a:visited {
+	
+	color: #000;
+	
+}
+
+p {
+	
+	font-size: 14px;
+	
+}
+
+table {
+	
+	
+}
+
+th {
+	
+	text-align: left;
+	
+}
+
+td {
+	
+	border-bottom: solid 1px #ccc;
+	
+}
+
+#perm-table {
+	
+	font-family: "Menlo";
+	
+}
+
+.logo {
+	font-family: "Menlo";
+	font-size: 30px;
+}
+
+.page-title {
+	
+	font-family: sans-serif;
+	color: #ccc;
+	
+}
+
+.code {
+	
+	color: #00aeff;
+	display: block;
+	border-left: solid 20px #eee;
+	background-color: #fff;
+	font-family: "Menlo";
+	
+}
+
+#container {
+	width: 950px;
+	margin: 0 auto;
+}
+#header {
+	
+	width: 890px;
+	background-color: #fff;
+	padding-top:30px;
+	
+}
