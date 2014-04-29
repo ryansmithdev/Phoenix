@@ -14,8 +14,6 @@ class Form  {
     public $error;
     
     function __construct( $id = null ) {
-    
-    	Console::tell("Submitting form...");
         
         if ($id):
             $this->id = $id;
