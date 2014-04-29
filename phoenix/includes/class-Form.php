@@ -30,7 +30,7 @@ class Form  {
     
     private function process() {
         
-        if ( isset($_POST) ):
+        if ( isset($_POST['form']) ):
         
             if ( is_array( $this->action ) ):
             
