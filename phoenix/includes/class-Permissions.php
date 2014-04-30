@@ -7,9 +7,9 @@ class Permissions {
     public $user;
     
     function __construct() {
-    
+    	
+    	$this->user = new User();
     	$this->getPDO("groups");
-        $this->user = $user = new User();
         
     }
     
@@ -19,35 +19,59 @@ class Permissions {
 	    
     }
     
-    public function createGroup( $slug, array $perms, $inherit = null ) {
+    public function createGroup( $name, array $perms = null, $inherit = null ) {
 	    
 	    /*
 		    
 		    Overwrites current group, or creates new
 		    
-		    
-		    
 		    FORMAT:
-		    
-		    
 		    
 	    */
 	    
-	    if ( !$this->db->rowExists("slug", array($slug)) ) {
+	    $perms = ($perms != null) ? implode(" ", $perms) : "";
+	    
+	    if ( !$this->db->rowExists($name, array("name") ) ) {
 		    
-		    $this->db->addToTable(array("slug", "perms", "inherit"), array($slug, $perms, $inherit )); 
+		    $this->db->addToTable(array("name", "perms", "inherit"), array($name, $perms, $inherit )); 
+		    
+		    return $this->db->rowExists($name, array("name"));
 		    
 	    }
 	    else {
 		    
-		    
-		    
+		    return false;
 		    
 	    }
 	    
+		
 	    
+    }
+    
+    public function deleteGroup( $name ) {
 	    
+	    if ( $this->db->rowExists($name, array("name") ) ) {
 	    
+	    	$this->db->deleteRow($name, array("name"));
+	    	
+	    	return (!$this->db->rowExists($name, array("name") ));
+	    
+	    }
+		else {
+			
+			return false;
+			
+		}
+	    
+    }
+    
+    public function addInheritaceToGroup( $group, $inherit ) {
+	    
+	    $this->db->updateTable( array("inherit"), array( $inherit ), $group, "name" );
+	    
+	    $data = $this->db->getRowData( $group, array("name") );
+	    
+	    return($inherit == $data['inherit']);
 	    
     }
     
@@ -76,15 +100,13 @@ class Permissions {
 	    
 	    //get perms from the user's group, and the users own permissions. Merge all into one array
 	    
-	    $data = $this->db->getRowData( $group, array("name"), null, "groups" );
+		    $data = $this->db->getRowData( $group, array("name"), null, "groups" );
 	    $data2 = $this->user->data;
 		
 	    $nodes = explode("%", $data['perms']);
 	    $nodes2 = explode("%", $data2['permissions']);
 		
 	    $perms = array_merge($nodes, $nodes2);
-	    
-	    die(var_dump($perms));
 	    
 	    return $perms;
 	    
