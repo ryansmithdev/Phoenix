@@ -21,9 +21,16 @@ elseif (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config_draft.php"))
 
 @require_once("includes/phoenix.php");
 @require_once("includes/functions/page.php");
-require_once("includes/functions/functions.php");
+@require_once("includes/functions/functions.php");
 @require_once("includes/install.php");
 @require_once("includes/trait-Phoenix.php");
+
+function __autoload( $class ) {
+
+	if ( file_exists(ROOT . "/includes/class-$class.php") )
+		@require_once( ROOT . "/includes/class-$class.php" );
+    	
+}
 
 function phoenix_start(){
 	

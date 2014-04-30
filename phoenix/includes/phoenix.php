@@ -20,3 +20,19 @@ define( "LOCAL_ROOT", "/phoenix" );
 define( "THEME_ROOT", ROOT . "/p/" );
 
 date_default_timezone_set( TIMEZONE_SET );
+
+ini_set('display_errors', 'Off');
+
+function phoenixErrorHandler() {
+	
+	$error_page = file_get_contents( ROOT . "/includes/frontend/phoenix_error.html");
+	
+	//$file = str_replace("%$def%", "$val", $error_page);
+	
+	$err = error_get_last();
+	
+	die(var_dump($err));
+	
+}
+
+register_shutdown_function("phoenixErrorHandler");
