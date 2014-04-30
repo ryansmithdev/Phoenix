@@ -31,22 +31,32 @@ class Commands {
 		
 	}
 	
-	public function add_user_to_group( $uid, $group ) {
+	public function create_permission_group( $name, $inherit = null ) {
+	
+		Console::tell("Creating perm group $name with inheritance $inherit");
 		
-		/*
-			
-			Sets a given user's group to a group slug. Overwrites the current.
-			
-		*/
+		$permissions = new Permissions();
+		$return = $permissions->createGroup( $name, null, $inherit );
 		
-		$user = new User();
-		
-		$user->editData(array("group"), array( $group ));
+		return ($return) ? "Created permission group $name successfully." : "Failed to create inheritance group $group. Try using delete_permission_group <group_name> first.";
 		
 	}
 	
-	public function permit_user( $uid, $permission ) {
+	public function delete_permission_group( $name ) {
 		
+		$permissions = new Permissions();
+		$return = $permissions->deleteGroup( $name );
+		
+		return ($return) ? "Deleted permission group $name successfully." : "Failed to delete inheritance group $group.";
+		
+	}
+	
+	public function add_inheritance_to_permission_group( $group, $inherit ) {
+		
+		$permissions = new Permissions();
+		$return = $permissions->addInheritaceToGroup( $group, $inherit );
+		
+		return ($return) ? "Inheritance for group $group changed to $inherit successfully." : "Inheritance change for group $group failed.";
 		
 	}
 	

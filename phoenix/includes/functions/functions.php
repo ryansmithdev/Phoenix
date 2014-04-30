@@ -1,16 +1,5 @@
 <?php
 
-function __autoload( $class ) {
-
-	if ( file_exists(ROOT . "/includes/class-$class.php") )
-	
-    	require_once( ROOT . "/includes/class-$class.php" );
-    	
-    else
-    
-    	Console::tell("Failed to find class file includes/class-$class.php");
-    	
-}
 
 function phoenixIsInstalled() {
 
@@ -18,26 +7,11 @@ function phoenixIsInstalled() {
 		
 		Checks for config.php file	
 		
+		*Must add more checks to this method*
+		
 	*/
 
 	return (file_exists(ROOT . "/config.php"));
-	
-}
-
-function phoenix_done() {
-	
-	//DISABLED!
-	
-	$format = new DateTime('u');
-	
-	$start = $format->format(START_TIME);
-	$now = $format->format(time());
-	
-	$time = $now - $start;
-	
-	Console::tell("Phoenix finished in $start $now $time seconds." );
-	
-	
 	
 }
 
@@ -92,6 +66,12 @@ function connectedToDb( array $db = null, $suppress_console_msg = false ) {
 
 function phoenixUserIsLoggedIn() {
 
+	/*
+		
+		Returns TRUE if the user has an active session.
+		
+	*/
+
 	$session = new Secure( "phoenix-secure-session" );
 	
 	if ($session) Console::tell("User is not logged in. Returning false...");
@@ -100,15 +80,23 @@ function phoenixUserIsLoggedIn() {
 
 }
 
-function getCurrentPhoenixUserData() {
-	
-	$user = new User();	
-	
-	return array( "id" => $user->id, "login" => $user->login->userid );
-
-}
-
 function pageRequest( $request = null ) {
+
+	/*
+		
+		Probably the most important function in the entire phoenix system. 
+		
+		This function performs the following:
+		
+			- Loads all plugin data
+			- Loads page data for $request
+			- Checks for the page's existence, throws 404 appropriately
+			- Asks for current user's page permissions, sends user to login page appropriately.
+			
+		
+		
+		
+	*/
 
 	$request = ($request == null) ? getRequest() : $request;
 	

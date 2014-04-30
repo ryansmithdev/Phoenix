@@ -103,9 +103,46 @@ class Mysql {
         
         Console::tell("QUERY STR: {$this->querystr}");
         
-        $this->dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+        //$this->dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
         
         $sth = $this->dbh->prepare( $this->querystr );
+        
+        return $sth;
+        
+    }
+    
+    function deleteRow( $identifier, $identifier_fields, $table = null ) {
+    
+    	//use the passed table name if not null.
+    	$table = ($table == null) ? $this->table : $table;
+        
+        if ( $identifier_fields ): //if user specified the fields names in which to look for $identifier
+            
+            $fields = array(); //init
+        
+            foreach( $identifier_fields as $item => $field):
+            
+                $fields[] = "$field='$identifier'";
+            
+            endforeach;
+            
+            $where = implode( " OR ", $fields ); //splice all fields with " OR " keyword
+        
+        else:
+            
+            $where = "id='$identifier'"; //add default WHERE clause
+        
+        endif;
+        
+        $this->querystr = "DELETE FROM $table WHERE $where";
+        
+        Console::tell("QUERY STR: {$this->querystr}");
+        
+        //$this->dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+        
+        $sth = $this->dbh->prepare( $this->querystr );
+        
+        $sth->execute();
         
         return $sth;
         

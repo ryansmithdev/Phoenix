@@ -1,0 +1,110 @@
+@charset "UTF-8";
+
+body {
+    
+    margin: 0 auto;
+    color: #555;
+    
+    font-family: sans-serif;
+    
+}
+
+.clearfix {
+    clear:both;
+}
+
+.heading {
+	
+	font-size: 40px;
+	margin-bottom: 20px;
+	display: block;
+	
+}
+
+#navbar {
+    
+    position: fixed;
+    width: 100%;
+    height: 30px;
+    border-bottom: solid 1px #ccc;
+    
+}
+#container {
+    
+    position: fixed;
+    top:30px;
+    left: -475px;
+    width: 950px;
+    margin-left: 50%;
+    
+}
+
+#content-right {
+    width: 700px;
+    float: left;
+}
+
+#sidebar {
+    height: 600px;
+    width: 250px;
+    float: left;
+}
+
+#debug {
+
+    position: fixed;
+    bottom: 0;
+    height: 250px;
+    width: 100%;
+    background-color: #eee;
+    border-top: solid 1px #888;
+    
+    font-family: "Courier New";
+    
+    overflow: hidden
+    
+}
+
+#debug-gui {
+	
+	width: 100%;
+	height: 190px;
+	overflow: scroll;
+	
+}
+
+#debug-gui .gui-line-num {
+	
+	display: block;
+	width: 50px;
+	float: left;
+	
+}
+
+#command {
+	
+	width: 100%;
+	height: 50px;
+	
+	
+	background-color: #fff;
+	
+	font-family: "Courier New";
+	
+	font-size:  25px;
+	
+	border: 0;
+	
+	border: solid 3px #fff;
+	
+}
+#command:focus {
+	
+	outline: none;
+	border: solid 3px #00a7ff;
+	
+}
+
+#debug-inner {
+    padding-left: 10px;
+}

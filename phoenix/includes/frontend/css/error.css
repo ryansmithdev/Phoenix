@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+@import "main.css";
+
+#clearfix {
+	
+	clear:both;
+	
+}
+#error-page-top-spacer {
+	
+	width: 900px;
+	height: 100px;
+	
+}
+.error {
+	
+	font-family: "Menlo";
+	font-weight: bold;
+	display: block;
+	margin-bottom: 20px;
+	
+}
+.file-info {
+	
+	font-family: "Menlo";
+	font-weight: bold;
+	color: #777;
+		
+}
+.file-line {
+	
+	font-family: "Menlo";
+	color: #444;
+	
+}
+#code {
+	
+	font-family: "Menlo";
+	background-color: #e4e4e4;
+	
+	width: 900px;
+	height: 150px;
+}
+#code .num {
+	
+	display: block;
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
+	float: left;
+	background-color: #ccc;
+	text-align: center;
+	
+}
+#code .error-line .num {
+	
+	background-color:#ff7b7b;
+	
+}
+#code .line, .error-line {
+	
+	display: block;
+	float: left;
+	width: 860px;
+	height: 30px;
+	border-left: solid 3px #777;
+	line-height: 2em;
+	
+}
+#code .error-line {
+	
+	background-color: #ff9e9e;
+	border-left: solid 3px #ff2f2f;
+	
+}
