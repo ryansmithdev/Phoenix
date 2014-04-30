@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # http://code.google.com/p/sequel-pro/
 #
-# Host: 127.0.0.1 (MySQL 5.6.14)
+# Host: 127.0.0.1 (MySQL 5.5.33)
 # Database: phoenix
-# Generation Time: 2014-04-30 20:19:27 +0000
+# Generation Time: 2014-04-30 21:30:07 +0000
 # ************************************************************
 
 
@@ -105,7 +105,35 @@ LOCK TABLES `permissions` WRITE;
 INSERT INTO `permissions` (`id`, `node`, `description`, `plugin`)
 VALUES
 	(1,'phoenix.blog.create.*','Create Phoenix blog posts','Phoenix'),
-	(2,'phoenix.blog.*','Full read,write,edit permissions for entire blog, all posts.','Phoenix');
+	(2,'phoenix.blog.*','Full read,write,edit permissions for entire blog, all posts.','Phoenix'),
+	(3,'phoenix.blog.edit.*','Edit all blogs','Phoenix'),
+	(4,'phoenix.blog.edit.own','Edit own blog','Phoenix'),
+	(5,'phoenix.blog.edit.others','Edit others blogs','Phoenix'),
+	(6,'phoenix.blog.edit.delete.own','Delete own blog','Phoenix'),
+	(7,'phoenix.blog.edit.delete.others','Delete others blogs','Phoenix'),
+	(8,'phoenix.calendar.date.*','Change all calendar dates','Phoenix'),
+	(9,'phoenix.calendar.edit.own','Change own calendar dates','Phoenix'),
+	(10,'phoenix.calendar.edit.others','Change other users calendar dates','Phoenix'),
+	(11,'phoenix.calendar.*','All calender permissions\n','Phoenix'),
+	(12,'phoenix.calendar.date.add.own','Add own calendar date','Phoenix'),
+	(13,'phoenix.calendar.date.add.others','add calender dates for other people','Phoenix'),
+	(14,'phoenix.calendar.event.*','add calender events for anyone','Phoenix'),
+	(15,'phoenix.calendar.event.edit.own','add calender events for self','Phoenix'),
+	(16,'phoenix.calendar.event.edit.others','add calendar events for others','Phoenix'),
+	(17,'phoenix.calendar.event.edit.*','edit calendar event','Phoenix'),
+	(18,'phoenix.page.*','all page perms','Phoenix'),
+	(19,'phoenix.page.edit.*','edit any page','Phoenix'),
+	(20,'phoenix.page.edit.own','edit only own page','Phoenix'),
+	(21,'phoenix.page.edit.others','edit only others pages','Phoenix'),
+	(22,'phoenix.page.edit.add.*','add pages','Phoenix'),
+	(23,'phoenix.page.edit.add.own','add only pages owned by self','Phoenix'),
+	(24,'phoenix.page.edit.add.others','add pages for other users','Phoenix'),
+	(25,'Phoenix.users.*','control all users','Phoenix'),
+	(26,'Phoenix.users.add','add users','Phoenix'),
+	(27,'Phoenix.users.delete','delete users','Phoenix'),
+	(28,'Phoenix.users.edit.*','edit anything about users','Phoenix'),
+	(29,'Phoenix.users.edit.own','edit self','Phoenix'),
+	(30,'Phoenix.users.edit.others','edit other users','Phoenix');
 
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
