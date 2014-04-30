@@ -58,7 +58,10 @@ class Mysql {
 	    
     }
     
-    function selectRow( $identifier, $identifier_fields, array $select_fields = null ) {
+    function selectRow( $identifier, $identifier_fields, array $select_fields = null, $table = null ) {
+    
+    	//use the passed table name if not null.
+    	$table = ($table == null) ? $this->table : $table;
         
         if ( $identifier_fields ): //if user specified the fields names in which to look for $identifier
             
@@ -96,9 +99,11 @@ class Mysql {
         
         endif;
         
-        $this->querystr = "SELECT $select FROM {$this->table} WHERE $where";
+        $this->querystr = "SELECT $select FROM $table WHERE $where";
         
         Console::tell("QUERY STR: {$this->querystr}");
+        
+        $this->dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
         
         $sth = $this->dbh->prepare( $this->querystr );
         
@@ -139,12 +144,12 @@ class Mysql {
     
     }
     
-    public function getRowData( $identifier, array $identifier_fields = null, array $mask_data = null ) {
+    public function getRowData( $identifier, array $identifier_fields = null, array $mask_data = null, $table = null ) {
         
         //This method expects a value for the id (default) or one of given fields in $identifier_fields
         //identifer_fields ex: array("id","last_name") or array("id")
         
-        $sth = $this->selectRow( $identifier, $identifier_fields );
+        $sth = $this->selectRow( $identifier, $identifier_fields, null, $table );
         
         $sth->execute();
         
@@ -170,6 +175,9 @@ class Mysql {
         	endforeach;
         
         endif;
+        
+        
+        if($this->fetch == false) Console::tell("WARNING: QUERY Returned FALSE");
         
         return $this->fetch; //return the data array
         
@@ -200,6 +208,9 @@ class Mysql {
     }
     
     function updateTable( array $set, array $values, $identifier_val, $identifier_field = "id" ) {
+    
+    	//ex: updateTable( array( "first_name", "last_name" ), array( "Bob", "Leverett" ), "admin", "username" );
+    	// would change first_name & last_name to Bob and Leverett for user with the username "admin"
         
         foreach($set as $field) {
 	        
