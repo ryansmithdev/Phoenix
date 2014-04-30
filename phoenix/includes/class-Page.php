@@ -17,16 +17,24 @@ class Page {
 		
 		$this->getPDO("pages");
 		
-		$this->exists = $this->db->rowExists( $slug, array("slug") );
+		$this->slug = $slug;
+		
+		$this->data = $this->db->getRowData( $this->slug, array("slug") );
+		
+		$this->exists = $this->db->rowExists( $this->slug, array("slug") );
 		
 		$this->count = $this->db->tableRowCount();
 		
-		$this->slug = $slug;
-		$this->is_protected = false;//$this->data['protected'] ? 1 : 0;
-		$this->requires_template = $this->data['requires_template'] ? 1 : 0;
+		$this->is_protected = ($this->data['protected'] == 1) ? true : false;
 		
-		$this->data = $this->db->getRowData( "slug", array( $this->slug ) );
+		$this->requires_template = ($this->data['requires_template'] == 1) ? true : false;
 		
+		
+	}
+	
+	public function getTitle() {
+		
+		return $this->data['title'];
 		
 	}
 	
