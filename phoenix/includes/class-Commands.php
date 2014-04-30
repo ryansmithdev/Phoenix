@@ -60,23 +60,4 @@ class Commands {
 		
 	}
 	
-	public function add_user_to_permission_group( $uid, $group ) {
-		
-		/*
-			
-			Sets a given user's group to a group slug. Overwrites the current.
-			
-		*/
-		
-		$user = new User();
-		
-		$user->editData(array("group"), array( $group ));
-		
-	}
-	
-	public function permit_user( $uid, $permission ) {
-		
-		
-	}
-	
 }
