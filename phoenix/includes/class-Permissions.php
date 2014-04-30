@@ -91,7 +91,7 @@ class Permissions {
     }
     
     public function userHasPermission( $perm_node, $uid = null ) {
-    	
+    	 
     	//phoenix.page.access.*
     	//phoenix.page.access.index
     
