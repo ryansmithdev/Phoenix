@@ -1,13 +1,15 @@
 <?php
 
 class Permissions {
-
+	
+	use Phoenix;
+	
     public $user;
     
-    function __construct( $userid ) {
+    function __construct() {
     
     	$this->getPDO("groups");
-        $this->user = $user = new User( $userid ):
+        $this->user = $user = new User();
         
     }
     
@@ -49,22 +51,113 @@ class Permissions {
 	    
     }
     
-    public function 
-    
-    public function userHasPermission( $uid, $perm_slug ) {
-        
-        $user = new User($uid);
-        
-        return $user->getPermissions();
-        
-        
+    public function getUserPermissions( $uid = null ) {
+	    
+	    if ( $this->user->loggedin ) {
+		    
+		    $group = $this->user->data['group'];
+		    
+		    $perms = $this->getGroupPermissions($group);
+		    
+		    return $perms;
+		    
+	    }
+	    else {
+		    
+		    $perms = $this->getGroupPermissions("default");
+		    
+		    return $perms;
+		    
+	    }
+	    
     }
     
-    public function get() {
+    public function getGroupPermissions($group) {
+	    
+	    //get perms from the user's group, and the users own permissions. Merge all into one array
+	    
+	    $data = $this->db->getRowData( $group, array("name"), null, "groups" );
+	    $data2 = $this->user->data;
+		
+	    $nodes = explode("%", $data['perms']);
+	    $nodes2 = explode("%", $data2['permissions']);
+		
+	    $perms = array_merge($nodes, $nodes2);
+	    
+	    die(var_dump($perms));
+	    
+	    return $perms;
+	    
+    }
+    
+    public function userHasPermission( $perm_node, $uid = null ) {
+    	
+    	//phoenix.page.access.*
+    	//phoenix.page.access.index
+    
+    	$node = explode(".", $perm_node);
+    	
+    	$node[0] = isset($node[0]) ? $node[0] : "";
+    	$node[1] = isset($node[1]) ? $node[1] : "";
+    	$node[2] = isset($node[2]) ? $node[2] : "";
+    	$node[3] = isset($node[3]) ? $node[3] : "";
         
-        $permissions = $this->user->getData( 'permissions' );
+        $perms = $this->getUserPermissions( $uid );
         
-        return unserialize( $permissions );
+        if ($perms[0] == "*") {
+	        
+	        // has * perms
+	        
+	        Console::tell("User has * permissions.");
+	        
+	        return true;
+	        
+        }
+        else if ( in_array("{$node[0]}.*", $perms) ){  
+	        
+	        //has phoenix.* perms
+	        
+	        Console::tell("User has {$node[0]}.* permissions.");
+	        
+	        return true;
+	        
+        }
+        else if ( in_array("{$node[0]}.{$node[1]}.*", $perms) ){  
+	    	
+	    	//has phoenix.page.* perms
+	    	
+	    	Console::tell("User has {$node[0]}.{$node[1]}.* permissions.");
+	    	
+	        return true;     
+	        
+        }
+        else if ( in_array("{$node[0]}.{$node[1]}.{$node[2]}.*", $perms) ){   
+	    	
+	    	//has phoenix.page.access.* perms
+	    	
+	    	Console::tell("User has {$node[0]}.{$node[1]}.{$node[2]} permissions.");
+	    	
+	        return true;  
+	        
+        }
+        else if ( in_array("{$node[0]}.{$node[1]}.{$node[2]}.{$node[3]}", $perms) ){  
+	    	
+	    	//has phoenix.page.access.index perms
+	    	
+	    	Console::tell("User has {$node[0]}.{$node[1]}.{$node[2]}.{$node[3]} permissions.");
+	    	
+	        return true;  
+	        
+        }
+        else {
+        
+        	Console::tell("User does not have the required permission $perm_node");
+	        
+	        return false;
+	        
+        }
+       
+        
         
     }
     

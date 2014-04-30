@@ -12,7 +12,7 @@ class Secure  {
         
         $this->session = $session;
         
-        $this->sessiondata = unserialize( $_SESSION["{$this->session}"] );
+        $this->sessiondata = isset($_SESSION["{$this->session}"]) ? unserialize($_SESSION["{$this->session}"]) : false;
         
     }
     
@@ -54,11 +54,11 @@ class Secure  {
     
     public function sessionTimedOut() {
 	    
-	    $timeout = $this->sessiondata['expire'];
+	    $timeout = isset($this->sessiondata['expire']) ? $this->sessiondata['expire'] : null;
 	    
 	    if ( !empty($timeout)):
 	
-		    $registered = $this->sessiondata['registered'];
+		    $registered = isset($this->sessiondata['registered']) ? $this->sessiondata['registered'] : null;
 	    
 			if ( ( $registered + $timeout ) < time() )
 	    	return true;
@@ -105,13 +105,13 @@ class Secure  {
 	                
 	                Console::tell( print_r($this->sessiondata, true));
 	                
+	                return true;
+	                
 	            else:
 	            
 	            	Console::tell("Session validated. Session will not time out. ");
 	            
 	            endif;
-                
-                return $_SESSION["{$this->session}"];
                 
             else:
             	
@@ -124,8 +124,6 @@ class Secure  {
             endif;
         
         else:
-        
-        	Console::tell("Session {$this->session} not set. Returning false..");
         
             return false;
         

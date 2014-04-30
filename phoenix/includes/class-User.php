@@ -13,10 +13,11 @@ class User  {
     
     public $loggedin;
     
-    function __construct( $id = null ) {
+    public $secure;
     
-        //init db class with table "users"
-        $this->db->table =  "users" ;
+    function __construct( $id = null ) {
+    	
+    	$this->getPDO("users");
         
         Console::tell("Constructing user...");
         
@@ -26,15 +27,17 @@ class User  {
         
         $this->id = ( !$id ) ? $this->loggedin : $id;
         
+        $this->data = $this->db->getRowData( $this->id, array("id"), array("password") );
+        
     }
     
     public function loggedIn() {
     
     	Console::tell("Validating session...");
-        
-        $this->session = new Secure( "phoenix-secure-session" );
+    	
+    	$this->secure = new Secure( "phoenix-secure-session" );
 	
-		return ( $this->session->isValid( true ) );
+		return ( $this->secure->isValid( true ) );
         
         
     }
@@ -43,7 +46,7 @@ class User  {
 	    
 	    if ($this->loggedIn() ) {
 		    
-		    return $this->session;
+		    return $this->secure->sessiondata['id'];
 		    
 	    }
 	    
@@ -51,10 +54,10 @@ class User  {
     
     public function authorize() {
     
-        $data = $this->getData( array( "id", "login" ) );
+        $data = array("login" => $this->login);
         
         //expire session in one hour (3600)
-        $session = (new Secure)->registerSession("phoenix-secure-session", $data, 3600);
+        $session = $this->secure->registerSession("phoenix-secure-session", $data, 3600);
         
 		return $session;
         
@@ -123,11 +126,17 @@ class User  {
         
     }
     
-    public function getData( $identifier_fields = null ) {
+    public function getData( array $fields ) {
 	    
-	    $data = $this->db->getRowData( $this->login, $identifier_fields, array("password") );
+	    $this->db->getRowData( $this->id, array("id") );
 	    
-	    return $data;
+	    return $this->data;
+	    
+    }
+    
+    public function editData( array $fields, array $values ) {
+	    
+	    $this->db->updateTable( $fields, $values, $this->session->userid, "id");
 	    
     }
     

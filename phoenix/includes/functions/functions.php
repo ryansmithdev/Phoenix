@@ -104,17 +104,13 @@ function getCurrentPhoenixUserData() {
 	
 	$user = new User();	
 	
-	return array( "id" => $user->id, "login" => $user->login );
+	return array( "id" => $user->id, "login" => $user->login->userid );
 
 }
 
-function checkUserPermissions($request) {
-	
-	return true;
-	
-}
+function pageRequest( $request = null ) {
 
-function pageRequest( $request ) {
+	$request = ($request == null) ? getRequest() : $request;
 	
 	Console::tell("Requesting page... REQ_STR: $request");
 	
@@ -128,36 +124,15 @@ function pageRequest( $request ) {
 	//die(var_dump($page));
 	
 	if ( $page->exists ):
-	
-		if ( $page->is_protected ):
-			
-			Console::tell("Requested page is protected.");
-			
-			if ( phoenixUserIsLoggedIn() ):
-			
-				Console::tell("You are in a secured session.");
-				
-				if ( pageIsAccessibleByCurrentUser( $page ) ):
-				
-					getPage( $request );
-					
-				else:
-				
-					getThemeFile("bad-access", $request);
-				
-				endif;	
-				
-			else:
-			
-				getThemeFile("login", $request, "You must login to view this page.");
-			
-			endif;
-			
 		
+		if ( pageIsAccessibleByCurrentUser( $page, $request ) ):
+			
+			getPage( $request, $page );
+			
 		else:
 		
-			getPage( $request, $plugins );
-		  	
+			getThemeTemplate("login", $request, "You must login to view this page.");
+		
 		endif;
 	
 	else:
@@ -180,7 +155,16 @@ function pageRequest( $request ) {
     
 }
 
-function getPage( $slug, $plugins = null ) {
+function getRequest() {
+	
+	//get page request
+	$request = isset( $_GET['p'] ) ? $_GET['p'] : "index";
+	
+	return $request;
+	
+}
+
+function getPage( $slug, $page = null, $plugins = null ) {
 
 	/*
 		
@@ -196,25 +180,30 @@ function getPage( $slug, $plugins = null ) {
 	getThemeFile("header");
 	
 	if( $exists = pageExists( $slug, $plugins->pages ) ) {
-	
-	
-		die(var_dump($exists));
-	
+		
 		$plugin = $plugins->pages["$slug"]["plugin"];
-		
-		if ( $slug->requires_template ){
-			getThemeFile( "page", $slug );
-		}
-		else{
-		
-		
-			if ($plugin) require_once( ROOT . "/plugins/$plugin/$slug.php");
+	
+		if ( is_object($page) ) {
+			
+			if ( $page->requires_template ){
+				
+				getThemeFile( "page", $slug, null, $page );
+			
+			}
+			else {
+				
+				getThemeFile( "page-$slug", $slug, null, $page );
+				
+			}
+			
 			
 		}
 		
 	}
 	else {
-	
+		
+		Console::tell("404: Page not found in page index.");
+		
 		//send the request string as the message.
 		getThemeFile( "404", $slug, $requeststr );
 		
@@ -224,20 +213,27 @@ function getPage( $slug, $plugins = null ) {
 	
 }
 
+function goToPage( $request ) {
+	
+	header("location: /?p=$request");
+	
+}
+
 function templateFileExists( $file ) {
 	
 	if ( file_exists( ROOT . "/p/$file.php" ) ) {
 		
-		return "p/";
+		return "p";
 		
 	}
-	elseif ( file_exists(ROOT . "/p/theme/$file.php") ) {
+	elseif ( file_exists( ROOT . "/p/theme/$file.php") ) {
 		
 		return "p/theme";
 		
 	}
 	else {
 		
+		Console::tell("File not found in template.");
 		return false;
 		
 	}
@@ -253,6 +249,8 @@ function getThemeTemplate( $slug, $error = null ) {
 		Includes theme file with header & footer, treats slug as a page.
 		
 	*/
+	
+	$form = new Form();
 	
 	Console::tell("Fetching theme template $slug");
 	
@@ -288,7 +286,7 @@ function pageTemplateExists() {
 	
 }
 
-function getThemeFile( $file, $request = null, $message = null ) {
+function getThemeFile( $file, $request = null, $message = null, Page $page = null ) {
 
 	/*
 		
@@ -300,7 +298,8 @@ function getThemeFile( $file, $request = null, $message = null ) {
 	Console::tell("Fetching Theme File: $file");
 	
 	if ( $dir = templateFileExists($file) ):
-	
+		
+		Console::tell("Requiring file: ". ROOT . "/$dir/$file.php");
 		$require = require_once(ROOT . "/$dir/$file.php");
 	
 	else:
@@ -311,7 +310,7 @@ function getThemeFile( $file, $request = null, $message = null ) {
 	
 }
 
-function pageIsAccessibleByCurrentUser( Page $page ) {
+function pageIsAccessibleByCurrentUser( $page, $slug ) {
 	
 	/*
 		
@@ -320,9 +319,32 @@ function pageIsAccessibleByCurrentUser( Page $page ) {
 		
 	*/
 	
-	$page = new Page($page);
 	
-	return $page->data["security"];
+	//die(var_dump($page));
+	
+	
+	if ($page->is_protected) {
+		
+		if (phoenixUserIsLoggedIn()) {
+			
+			$permissions = new Permissions();
+		
+			return $permissions->userHasPermission("phoenix.page.access.$slug");
+			
+			
+		}
+		else {
+			
+			return false;
+			
+		}
+		
+	}
+	else {
+		
+		return true;
+		
+	}
 	
 	
 	

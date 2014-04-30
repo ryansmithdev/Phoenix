@@ -17,7 +17,7 @@ class AdminPanel {
 		
 		$this->registerAction( array("hook"=>"form-handler", "args"=> array("form_name"=>"admin_panel_form", "trigger_method"=>"processForm")) );
 		$this->registerAction( array("hook"=>"add-page", "args"=> array("file"=>"admin", "protected"=>true) ) );
-		$this->registerAction( array("hook"=>"add-page", "args"=> array("file"=>"index", "protected"=>false) ) );
+		//$this->registerAction( array("hook"=>"add-page", "args"=> array("file"=>"index", "protected"=>false) ) );
 		
 	}
 	

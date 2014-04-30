@@ -19,23 +19,19 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config.php"))
 elseif (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config_draft.php")) 
 	require_once("config_draft.php");
 
-
 @require_once("includes/phoenix.php");
-@require_once("includes/functions/functions.php");
+@require_once("includes/functions/page.php");
+require_once("includes/functions/functions.php");
 @require_once("includes/install.php");
 @require_once("includes/trait-Phoenix.php");
-
 
 function phoenix_start(){
 	
 	if ( phoenixIsInstalled() ):
 	
 		if ( connectedToDb() ):
-			
-			//get page request
-			$request = isset( $_GET['p'] ) ? $_GET['p'] : "index";
 		    
-		    pageRequest( $request );
+		    pageRequest();
 		
 		else:
 			
