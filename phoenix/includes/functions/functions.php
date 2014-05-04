@@ -15,6 +15,8 @@ function phoenixIsInstalled() {
 	
 }
 
+asdgasdgg();
+
 function connectedToDb( array $db = null, $suppress_console_msg = false ) {
 
 	/*
@@ -169,7 +171,7 @@ function getPage( $slug, $page = null, $plugins = null ) {
 	
 	if( $exists = pageExists( $slug, $plugins->pages ) ) {
 		
-		$plugin = $plugins->pages["$slug"]["plugin"];
+		$plugins->pages["$slug"]["plugin"];
 	
 		if ( is_object($page) ) {
 			

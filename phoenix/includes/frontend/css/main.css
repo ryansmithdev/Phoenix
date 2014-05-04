@@ -7,6 +7,8 @@ body {
     
     font-family: sans-serif;
     
+    background-color: #faf8ef;
+    
 }
 
 .clearfix {
@@ -18,6 +20,28 @@ body {
 	font-size: 40px;
 	margin-bottom: 20px;
 	display: block;
+	font-family: "Verdana";
+	
+}
+
+#phoenix-header {
+	
+	width: 100%;
+	height: 100px;
+	
+}
+
+#phoenix-header #logo {
+	
+	width: 200px;
+	height: 100px;
+	background-image: url(../assets/phx-800.png);
+	background-repeat: no-repeat;
+	
+	background-size: 200px 50px;
+	
+	margin-top: 50px;
+	
 	
 }
 
@@ -31,10 +55,10 @@ body {
 }
 #container {
     
+    width: 1200px;
     position: fixed;
     top:30px;
-    left: -475px;
-    width: 950px;
+    left: -600px;
     margin-left: 50%;
     
 }

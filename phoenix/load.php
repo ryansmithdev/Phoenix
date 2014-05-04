@@ -14,6 +14,8 @@
 
 session_start();
 
+@require_once("includes/pre.php");
+
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config.php")) 
 	require_once("config.php");
 elseif (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config_draft.php")) 
@@ -23,14 +25,22 @@ elseif (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config_draft.php"))
 @require_once("includes/functions/page.php");
 @require_once("includes/functions/functions.php");
 @require_once("includes/install.php");
+
 @require_once("includes/trait-Phoenix.php");
-
-function __autoload( $class ) {
-
-	if ( file_exists(ROOT . "/includes/class-$class.php") )
-		@require_once( ROOT . "/includes/class-$class.php" );
-    	
-}
+@require_once("includes/class-Command.php");
+@require_once("includes/class-Commands.php");
+@require_once("includes/class-Console.php");
+@require_once("includes/class-Form.php");
+@require_once("includes/class-Mysql.php");
+@require_once("includes/class-Page.php");
+@require_once("includes/class-Permissions.php");
+@require_once("includes/class-Plugin.php");
+@require_once("includes/class-PluginLoader.php");
+@require_once("includes/class-Preferences.php");
+@require_once("includes/class-Projects.php");
+@require_once("includes/class-Secure.php");
+@require_once("includes/class-Update.php");
+@require_once("includes/class-User.php");
 
 function phoenix_start(){
 	
@@ -53,6 +63,7 @@ function phoenix_start(){
 		getThemeTemplate( "welcome" );
 	
 	endif;
-
 	
 }
+
+$shutdown->cancel();

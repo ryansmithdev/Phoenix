@@ -13,6 +13,16 @@
 	height: 100px;
 	
 }
+#refresh {
+	
+	position: absolute;
+	left: 0;
+	right: 0;
+	top:0;
+	bottom:0;
+	z-index: 1000;
+	
+}
 .error {
 	
 	font-family: "Menlo";
@@ -23,6 +33,7 @@
 }
 .file-info {
 	
+	font-size: 20px;
 	font-family: "Menlo";
 	font-weight: bold;
 	color: #777;
@@ -39,14 +50,13 @@
 	font-family: "Menlo";
 	background-color: #e4e4e4;
 	
-	width: 900px;
-	height: 150px;
+	width: 1200px;
 }
 #code .num {
 	
 	display: block;
 	width: 30px;
-	height: 30px;
+	height: 28px;
 	margin-right: 10px;
 	float: left;
 	background-color: #ccc;
@@ -62,15 +72,19 @@
 	
 	display: block;
 	float: left;
-	width: 860px;
-	height: 30px;
+	width: 1197px;
+	height: 28px;
 	border-left: solid 3px #777;
-	line-height: 2em;
+	line-height: 1.8em;
+	overflow: hidden;
 	
 }
 #code .error-line {
 	
 	background-color: #ff9e9e;
 	border-left: solid 3px #ff2f2f;
+	
+	border-top: solid 1px #ff4141;
+	border-bottom: solid 1px #ff4141;
 	
 }

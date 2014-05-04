@@ -2,13 +2,11 @@
 
 class Preferences {
 
-    
+    use Phoenix;
     
     function __construct() {
         
         $this->db->$this->getPDO("prefs");
-
-	use Phoenix;
         
     }
     
