@@ -15,8 +15,6 @@ function phoenixIsInstalled() {
 	
 }
 
-asdgasdgg();
-
 function connectedToDb( array $db = null, $suppress_console_msg = false ) {
 
 	/*

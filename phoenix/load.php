@@ -21,6 +21,8 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config.php"))
 elseif (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config_draft.php")) 
 	require_once("config_draft.php");
 
+@require_once("includes/class-Console.php");
+
 @require_once("includes/phoenix.php");
 @require_once("includes/functions/page.php");
 @require_once("includes/functions/functions.php");
@@ -29,7 +31,6 @@ elseif (file_exists($_SERVER['DOCUMENT_ROOT'] . "/phoenix/config_draft.php"))
 @require_once("includes/trait-Phoenix.php");
 @require_once("includes/class-Command.php");
 @require_once("includes/class-Commands.php");
-@require_once("includes/class-Console.php");
 @require_once("includes/class-Form.php");
 @require_once("includes/class-Mysql.php");
 @require_once("includes/class-Page.php");

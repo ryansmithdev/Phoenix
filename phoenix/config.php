@@ -54,4 +54,4 @@ define( "DB_PASS", "root" );
 
 define( "TIMEZONE_SET", "America/New_York" );
 
-define( "DEBUG_MODE_ENABLED", "YES" );
+define( "DEBUG_MODE_ENABLED", "NO" );

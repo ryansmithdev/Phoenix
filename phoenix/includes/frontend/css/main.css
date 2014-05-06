@@ -74,6 +74,18 @@ body {
     float: left;
 }
 
+.center-span {
+	
+	width: 100%;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 40px;
+	
+	font-size: 20px;
+	font-weight: 800;
+	
+}
+
 #debug {
 
     position: fixed;
