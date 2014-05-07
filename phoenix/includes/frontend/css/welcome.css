@@ -1,0 +1,55 @@
+@charset "UTF-8";
+@import "main.css";
+
+#welcome-header {
+	
+	width: 1000px;
+	margin: 0 auto;
+	height: 250px;
+	
+	margin-bottom: 20px;
+	
+	background-image: url(../assets/phx-2000.png);
+	background-size: 1000px 250px;
+
+	
+}
+
+#step-controller {
+	
+	width: 100px;
+	margin: 0 auto;
+	height: 100px;
+	text-align: center;
+	
+}
+
+#step-controller ul {
+	
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	
+}
+
+#step-controller ul li {
+	
+}
+
+#step-controller ul li a {
+	
+	padding: 10px 0 10px 0;
+	display: block;
+	width: 100px;
+	background-color: #444;
+	border-radius: 3px;
+	line-height: 2.5em;
+	color: #ddd;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	box-shadow:inset 1px 1px 8px 3px black;
+	
+}
+
